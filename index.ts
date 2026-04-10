@@ -100,10 +100,10 @@ function mainPage(base: string, listing: ManifoldListing | null): SnapHandlerRes
   const timer = listing?.endTime ? timeRemaining(listing.endTime) : "Auction live";
 
   const elements: Record<string, SnapElementInput> = {
-    page: { type: "stack", props: { gap: "md" }, children: ["header", "artwork", "sep1", "bid-row", "sep2", "actions"] },
+    page: { type: "stack", props: { gap: "sm" }, children: ["header", "artwork", "bid-row", "timer", "actions"] },
     header: { type: "item", props: { title: "An Ambient Morning", description: "1/1 · BrettDrawsStuff · Manifold" }, children: ["live-badge"] },
     "live-badge": { type: "badge", props: { label: "Live", color: "green", icon: "zap" } },
-    artwork: { type: "image", props: { url: ARTWORK_GIF, aspect: "4:3", alt: "An Ambient Morning by BrettDrawsStuff" } },
+    artwork: { type: "image", props: { url: ARTWORK_GIF, aspect: "16:9", alt: "An Ambient Morning by BrettDrawsStuff" } },
     sep1: { type: "separator", props: {} },
     "bid-row": { type: "item", props: { title: currentBid, description: bidDesc }, children: ["wallet-icon"] },
     "wallet-icon": { type: "icon", props: { name: "wallet", color: "accent" } },
