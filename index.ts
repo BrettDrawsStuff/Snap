@@ -9,7 +9,7 @@ const LISTING_ID = "4068856048";
 const CONTRACT_ADDRESS = "0xb58b21f2A0c35A190a05CA7A28781B8ffcCb71B1";
 const NETWORK = 1;
 const MANIFOLD_API_BASE = "https://apps.api.manifold.xyz";
-const ARTWORK_GIF = "https://raw.githubusercontent.com/BrettDrawsStuff/Snap/main/Thumb1.png";
+const ARTWORK_GIF = "https://raw.githubusercontent.com/BrettDrawsStuff/Snap/main/Thumb1.gif";
   "https://assets.manifold.xyz/original/5559bbaba1ce510f5dcb0b5fdac4b0a178f70e782c0701166d2d64d292fcff26.gif";
 
 interface ManifoldBid {
