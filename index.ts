@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import { serve } from "@hono/node-server";
 import { registerSnapHandler } from "@farcaster/snap-hono";
 import type { SnapElementInput, SnapHandlerResult } from "@farcaster/snap";
@@ -144,6 +145,9 @@ function bidsPage(base: string, bids: ManifoldBid[], listing: ManifoldListing | 
 }
 
 const app = new Hono();
+
+// Allow Farcaster clients and the emulator to fetch this snap
+app.use("*", cors({ origin: "*", allowMethods: ["GET", "POST", "OPTIONS"] }));
 
 registerSnapHandler(
   app,
