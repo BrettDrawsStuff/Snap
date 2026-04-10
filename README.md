@@ -19,21 +19,49 @@ Renders as an interactive embed in Farcaster casts with:
 
 ---
 
-## Setup
+## File Structure
+
+```
+index.ts        ← main snap server
+package.json
+tsconfig.json
+README.md
+Thumb1.png      ← artwork thumbnail
+```
+
+---
+
+## Deployment
+
+This snap is deployed on **Vercel** via GitHub. Any commit to `main` triggers an automatic redeploy.
+
+### Environment Variables
+
+Set these in the Vercel dashboard under Settings → Environment Variables:
+
+| Variable | Required | Description |
+|---|---|---|
+| `SNAP_PUBLIC_BASE_URL` | Yes | Your Vercel deployment URL, no trailing slash |
+| `SKIP_JFS_VERIFICATION` | Dev only | Set to `1` to skip JFS signature checks |
+| `PORT` | Optional | HTTP port (default: `3003`) |
+
+### Vercel Settings
+
+- **Deployment Protection** must be set to **No protection** (Settings → Deployment Protection) — otherwise Farcaster clients will get a 403 and the snap won't load.
+
+---
+
+## Local Dev
+
+If you have Node.js and pnpm installed:
 
 ```bash
 pnpm install
-```
-
-### Local dev (no JFS verification)
-
-```bash
 SKIP_JFS_VERIFICATION=1 pnpm dev
+# → http://localhost:3003
 ```
 
-Test at the [Farcaster Snap Emulator](https://farcaster.xyz/~/developers/snaps):
-- Enter `http://localhost:3003`
-- Use the emulator — it signs POST requests automatically
+Test at the [Farcaster Snap Emulator](https://farcaster.xyz/~/developers/snaps) — enter `http://localhost:3003`.
 
 Verify the snap JSON directly:
 ```bash
@@ -42,43 +70,10 @@ curl -sS -H 'Accept: application/vnd.farcaster.snap+json' http://localhost:3003/
 
 ---
 
-## Deployment
-
-Deploy anywhere that runs Node.js. Recommended options:
-
-### Vercel
-
-```bash
-# Install Vercel CLI
-npm i -g vercel
-vercel deploy
-```
-
-Set environment variable in Vercel dashboard:
-```
-SNAP_PUBLIC_BASE_URL=https://your-deployment.vercel.app
-```
-
-### Railway / Render / Fly.io
-
-Set `SNAP_PUBLIC_BASE_URL` to your deployment origin.
-
----
-
-## Environment Variables
-
-| Variable | Required | Description |
-|---|---|---|
-| `SNAP_PUBLIC_BASE_URL` | In production | Your deployment URL, no trailing slash |
-| `SKIP_JFS_VERIFICATION` | Dev only | Set to `1` to skip JFS signature checks |
-| `PORT` | Optional | HTTP port (default: `3003`) |
-
----
-
 ## Snap Structure
 
 ### Main View (`/?view=main` or `/`)
-- Artwork GIF preview
+- 16:9 artwork thumbnail
 - Current bid + leading bidder address
 - Time remaining
 - **Place Bid** (opens Manifold)
@@ -86,8 +81,22 @@ Set `SNAP_PUBLIC_BASE_URL` to your deployment origin.
 
 ### Bids View (`/?view=bids`)
 - Bid count badge
-- Up to 5 most recent bids with amount, shortened address, and time ago
+- Up to 5 highest bids with amount, shortened address, and time ago
 - **Back to Auction** button
+
+---
+
+## Updating for a New Drop
+
+The only constants that need changing for a new auction are at the top of `index.ts`:
+
+```ts
+const MANIFOLD_URL = "https://manifold.xyz/@brettdrawsstuff/id/..."
+const LISTING_ID = "..."
+const ARTWORK_GIF = "https://raw.githubusercontent.com/BrettDrawsStuff/Snap/main/Thumb1.png"
+```
+
+Also replace `Thumb1.png` in the repo with the new artwork thumbnail.
 
 ---
 
@@ -95,11 +104,7 @@ Set `SNAP_PUBLIC_BASE_URL` to your deployment origin.
 
 Bids are fetched from `apps.api.manifold.xyz/v1/marketplace/listings/{LISTING_ID}/bids`.
 
-This is the same API Manifold's own Gallery widgets use. If the API shape changes or
-the listing ID changes, update the `LISTING_ID` constant in `src/index.ts`.
-
-The snap gracefully handles API failures — if Manifold is unreachable, the main card
-still renders with "No bids yet" and the Place Bid link always works.
+The snap gracefully handles API failures — if Manifold is unreachable, the main card still renders with "No bids yet" and the Place Bid link always works.
 
 ---
 
