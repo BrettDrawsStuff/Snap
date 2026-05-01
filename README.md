@@ -1,4 +1,4 @@
-# An Ambient Morning — Farcaster Snap
+# An Ambient Morning — Farcaster Snap.
 
 A Farcaster Snap (v2.0) for **BrettDrawsStuff**'s 1/1 auction on Manifold.
 
