@@ -9,7 +9,7 @@ import { registerSnapHandler } from "@farcaster/snap-hono";
 
 const MANIFOLD_URL = "https://manifold.xyz/@brettdrawsstuff/id/4068856048";
 const LISTING_ID = 4068856048n;
-const ARTWORK_URL = "https://raw.githubusercontent.com/BrettDrawsStuff/Snap/main/Thumb1.png";
+const ARTWORK_URL = "https://raw.githubusercontent.com/BrettDrawsStuff/Snap/main/Thumb1.gif";
 
 // Manifold Marketplace Core (mainnet)
 const MARKETPLACE_CONTRACT = "0x3a3548e060be10c2614d0a4cb0c03cc9093fd799";
